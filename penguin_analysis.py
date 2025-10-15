@@ -129,7 +129,7 @@ def output_results_txt(out_path, species_name, ratio_value, bill_depth_summary):
 
 
 def main(): 
-    data = load_penguins("penguin.csv")
+    data = load_penguins("penguins.csv")
 
     species = "Adelie"
     adelie_ratio = calc_mass_ratio(data, "Adelie")
@@ -138,4 +138,7 @@ def main():
 
     output_results_txt("penguin_results.txt", species, adelie_ratio, bill_depth_summary)
 
+
+if __name__ == "__main__":
+    main()
 
