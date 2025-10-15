@@ -55,26 +55,38 @@ def load_penguins(f):
 
 
 def calc_mass_ratio(d, species_name):
+
     masses = d[species_name]["masses"]
     bills = d[species_name]["bills"]
     flippers = d[species_name]["flippers"]
 
-    total_ratio = 0
+    total_ratio = 0.0
     count = 0
 
     for i in range(len(masses)):
-        m = masses[i]
-        b = bills[i]
-        f = flippers[i]
-        if m != "" and b != "" and f != "":
-            total_ratio += float(m) / (float(b) * float(f))
-            count += 1
+        m = masses[i].strip().strip('"')
+        b = bills[i].strip().strip('"')
+        f = flippers[i].strip().strip('"')
 
-    return total_ratio / count
+        if m in ("", "NA") or b in ("", "NA") or f in ("", "NA"):
+            continue
+
+        m_val = float(m)
+        b_val = float(b)
+        f_val = float(f)
+
+        if b_val == 0 or f_val == 0:
+            continue
+
+        total_ratio += m_val / (b_val * f_val)
+        count += 1
+
+    return total_ratio / count if count else 0.0
 
 
 def calc_avg_bill_depth_by_island_and_sex(d):
     totals = {}
+    result = {}
 
     for species in d:
         islands = d[species]["islands"]
@@ -101,7 +113,7 @@ def calc_avg_bill_depth_by_island_and_sex(d):
             if key in ("male", "female"):
                 totals[isl][key]["sum"] += dep_val
                 totals[isl][key]["n"]   += 1
-            result = {}
+            
 
     for isl, by_sex in totals.items():
         result[isl] = {
