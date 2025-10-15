@@ -128,8 +128,9 @@ def output_results_txt(out_path, species_name, ratio_value, bill_depth_summary):
     with open(out_path, "w") as f:
         f.write("Penguin Calculations:\n")
         f.write(" \n")
-        f.write(f"Mass ÷ (Bill x Flipper) Ratio for {species_name}:\n")
+        f.write(f"Mass / (Bill x Flipper) Ratio for {species_name}:\n")
         f.write(f"{ratio_value}\n")
+        f.write(" \n")
         f.write(f"Average Bill Depth (mm) by Island and Sex:\n")
         for island, sex_dict in bill_depth_summary.items():
             male_avg = sex_dict["male"]
